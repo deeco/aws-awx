@@ -1,2 +1,1 @@
-# aws-awx
-aws-awx
+# AWS-Terraform
