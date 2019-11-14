@@ -1,6 +1,6 @@
 - name: Install Docker
 
-  hosts: awx
+  hosts: all
 
   become: yes
   become_method: sudo
@@ -15,4 +15,4 @@
        - docker_install_compose: true
        - docker_compose_version: "1.23.2"
        - docker_users:
-          - vagrant
+          - ubuntu
