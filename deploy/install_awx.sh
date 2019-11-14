@@ -11,7 +11,7 @@ sudo apt-get install ansible -y
 sudo apt-get install git -y
 
 # clone repository
-git clone https://github.com/deeco/aws-awx
+git clone https://github.com/deeco/aws-awx /tmp/aws-awx
 
 # run playbook
-ansible-playbook --connection=local 127.0.0.1 aws-awx/deploy/docker.yml
+ansible-playbook --connection=local 127.0.0.1 /tmp/aws-awx/deploy/docker.yml
