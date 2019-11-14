@@ -11,6 +11,8 @@ services:
       - "80:8052"
     hostname: awxweb
     user: root
+    volumes:
+     - ./SECRET_KEY:/etc/tower/SECRET_KEY
     restart: unless-stopped
     environment:
       http_proxy:
@@ -41,6 +43,8 @@ services:
       - postgres
     hostname: awx
     user: root
+    volumes:
+     - ./SECRET_KEY:/etc/tower/SECRET_KEY
     restart: unless-stopped
     environment:
       http_proxy:
