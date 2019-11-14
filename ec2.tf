@@ -16,6 +16,20 @@ resource "aws_security_group" "awx" {
     cidr_blocks = ["92.51.249.9/32"]
   }
 
+  egress {
+    from_port       = 80
+    to_port         = 80
+    protocol        = "tcp"
+    cidr_blocks     = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port       = 443
+    to_port         = 443
+    protocol        = "tcp"
+    cidr_blocks     = ["0.0.0.0/0"]
+  }
+
   vpc_id = "${aws_vpc.awx.id}"
 }
 
@@ -23,14 +37,10 @@ resource "aws_instance" "awx1" {
   ami = "${var.ami}"
   instance_type = "${var.instance_type}"
   key_name = "terraform_ec2_key"
+  user_data = "${file("deploy/install_awx.sh")}"
   security_groups = ["${aws_security_group.awx.id}"]
-  subnet_id = "${aws_subnet.subnet3.id}"
+  subnet_id = "${aws_subnet.subnet7.id}"
   associate_public_ip_address = true
-
-  provisioner "file" {
-    source      = "deploy/"
-    destination = "/tmp/deploy/"
-  }
 
   tags = {
       Name = "AWX-APP"
