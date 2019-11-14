@@ -13,6 +13,6 @@
        - docker_edition: 'ce'
        - docker_package_state: present
        - docker_install_compose: true
-       - docker_compose_version: "1.23.2"
+       - docker_compose_version: "1.25.0-rc4"
        - docker_users:
           - ubuntu
