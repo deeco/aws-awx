@@ -51,7 +51,7 @@ resource "aws_instance" "awx1" {
   ami = "${var.ami}"
   instance_type = "${var.instance_type}"
   key_name = "terraform_ec2_key"
-  user_data = "${file("deploy/install_awx.sh")}"
+  user_data = "${file("deploy/install_awx_tower.sh")}"
   security_groups = ["${aws_security_group.awx.id}"]
   subnet_id = "${aws_subnet.subnet7.id}"
   associate_public_ip_address = true
