@@ -25,7 +25,7 @@ variable "key_name" {
 
 variable "instance_type" {
   description = "ec2 instance type"
-  default     = "t2.xlarge"
+  default     = "t2.large"
 }
 
 variable "ami" {
