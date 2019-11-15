@@ -1,6 +1,6 @@
 #! /bin/bash
 sudo apt-get update
-sudo apt-get install apt-transport-https wget gnupg python3 python3-pip python-dev tree libpq-dev
+sudo apt-get install apt-transport-https wget gnupg python3 python3-pip python-dev tree libpq-dev -y
 
 ## Anisble Python
 sudo apt-get install python -y
