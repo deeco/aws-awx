@@ -6,14 +6,21 @@ resource "aws_security_group" "awx" {
     from_port = 80
     to_port = 80
     protocol = "tcp"
-    cidr_blocks = ["92.51.249.9/32"]
+    cidr_blocks = ["92.51.249.9/32","89.100.106.249/32"]
+  }
+
+  ingress {
+    from_port = 8052
+    to_port = 8052
+    protocol = "tcp"
+    cidr_blocks = ["92.51.249.9/32","89.100.106.249/32"]
   }
 
   ingress {
     from_port = 22
     to_port = 22
     protocol = "tcp"
-    cidr_blocks = ["92.51.249.9/32"]
+    cidr_blocks = ["92.51.249.9/32","89.100.106.249/32"]
   }
 
   egress {
@@ -30,6 +37,13 @@ resource "aws_security_group" "awx" {
     cidr_blocks     = ["0.0.0.0/0"]
   }
 
+  egress {
+    from_port       = 8052
+    to_port         = 8052
+    protocol        = "tcp"
+    cidr_blocks     = ["0.0.0.0/0"]
+  }
+
   vpc_id = "${aws_vpc.awx.id}"
 }
 
@@ -37,25 +51,13 @@ resource "aws_instance" "awx1" {
   ami = "${var.ami}"
   instance_type = "${var.instance_type}"
   key_name = "terraform_ec2_key"
-  user_data = "${file("deploy/install_awx.sh")}"
+  user_data = "${file("deploy/install_awx_tower.sh")}"
   security_groups = ["${aws_security_group.awx.id}"]
   subnet_id = "${aws_subnet.subnet7.id}"
   associate_public_ip_address = true
 
   tags = {
       Name = "AWX-APP"
-    }
-}
-
-resource "aws_instance" "awx2" {
-  ami = "${var.ami}"
-  instance_type = "${var.instance_type}"
-  key_name = "terraform_ec2_key"
-  security_groups = ["${aws_security_group.awx.id}"]
-  subnet_id = "${aws_subnet.subnet6.id}"
-  associate_public_ip_address = false
-  tags = {
-      Name = "AWX-DB"
     }
 }
 
