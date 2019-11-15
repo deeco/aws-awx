@@ -6,14 +6,21 @@ resource "aws_security_group" "awx" {
     from_port = 80
     to_port = 80
     protocol = "tcp"
-    cidr_blocks = ["92.51.249.9/32"]
+    cidr_blocks = ["92.51.249.9/32","89.100.106.249/32"]
+  }
+
+  ingress {
+    from_port = 8052
+    to_port = 8052
+    protocol = "tcp"
+    cidr_blocks = ["92.51.249.9/32","89.100.106.249/32"]
   }
 
   ingress {
     from_port = 22
     to_port = 22
     protocol = "tcp"
-    cidr_blocks = ["92.51.249.9/32"]
+    cidr_blocks = ["92.51.249.9/32","89.100.106.249/32"]
   }
 
   egress {
@@ -26,6 +33,13 @@ resource "aws_security_group" "awx" {
   egress {
     from_port       = 443
     to_port         = 443
+    protocol        = "tcp"
+    cidr_blocks     = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port       = 8052
+    to_port         = 8052
     protocol        = "tcp"
     cidr_blocks     = ["0.0.0.0/0"]
   }
@@ -44,18 +58,6 @@ resource "aws_instance" "awx1" {
 
   tags = {
       Name = "AWX-APP"
-    }
-}
-
-resource "aws_instance" "awx2" {
-  ami = "${var.ami}"
-  instance_type = "${var.instance_type}"
-  key_name = "terraform_ec2_key"
-  security_groups = ["${aws_security_group.awx.id}"]
-  subnet_id = "${aws_subnet.subnet6.id}"
-  associate_public_ip_address = false
-  tags = {
-      Name = "AWX-DB"
     }
 }
 
